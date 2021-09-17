@@ -58,3 +58,30 @@ artistElement.classList.add('song__artist');
 
 // добавляем текст
 artistElement.textContent = artistValue;
+4
+Соберём все элементы в один, который и будем добавлять в DOM. Методом append по очереди добавьте элементы artistElement, titleElement и likeButtonElement в элемент trackContainer.
+5
+Вызовом append добавьте собранный элемент trackContainer в конец songsContainer.
+После этого избавьтесь от уязвимости. Сотрите в самом конце присвоение insertAdjacentHTML:
+songsContainer.insertAdjacentHTML('beforeend', `
+    <div class="song">
+        <h4 class="song__artist">${artistValue}</h4>
+        <p class="song__title">${titleValue}</p>
+        <button class="song__like"></button>
+    </div>
+`);
+6
+С добавлением песен закончили — будем их удалять. Сделайте кнопку «Очистить плейлист» рабочей.
+В конце script.js мы создали заготовку обработчика клика по кнопке, которая очищает плейлист.
+С помощью цикла удалите все песни из плейлиста:
+resetButton.addEventListener('click', function () {
+  const songs = document.querySelectorAll('.song')
+
+  // for (let i = 0; i < songs.length; i++) { ... }
+});
+7
+Нажатие на кнопку «Очистить плейлист» должно:
+удалять все песни,
+показывать надпись «Нет добавленных песен»,
+делать неактивной кнопку «Очистить плейлист».
+Первый пункт вы уже сделали, остались последние два. Это можно сделать одной строчкой кода. Постарайтесь догадаться какой. Если идей не будет — загляните в подсказку.

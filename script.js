@@ -27,7 +27,10 @@ function addSong(artistValue, titleValue) {
     titleElement.textContent = titleValue;
     const likeButtonElement = document.createElement('button');
     likeButtonElement.classList.add('song__like');
-
+    /*решение 4 задачи*/
+    trackContainer.append(artistElement,titleElement,likeButtonElement);
+    /*решение 5 задачи*/
+    songsContainer.append(trackContainer);
     /*songsContainer.insertAdjacentHTML('beforeend', `
     <div class="song">
       <h4 class="song__artist">${artistValue}</h4>
@@ -47,4 +50,14 @@ addButton.addEventListener('click', function () {
 
     artist.value = '';
     title.value = '';
+});
+
+resetButton.addEventListener('click', function () {
+    const songs = document.querySelectorAll('.song');
+/*ответ на 6 задачу*/
+    for (let i = 0; i < songs.length; i++) {
+        songs[i].remove();
+    }
+    /*ответ на 7 задачу*/
+    renderNoSongs();
 });

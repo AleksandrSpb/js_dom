@@ -15,15 +15,27 @@ function renderNoSongs() {
     resetButton.classList.add('input__btn_disabled');
     noSongsElement.classList.remove('no-songs_hidden');
 }
-
+/*решение 3 задачи*/
 function addSong(artistValue, titleValue) {
-    songsContainer.insertAdjacentHTML('beforeend', `
+    const trackContainer =document.createElement ('div');
+    trackContainer.classList.add('song');
+    const artistElement = document.createElement('h4');
+    artistElement.classList.add('song__artist');
+    artistElement.textContent = artistValue;
+    const titleElement = document.createElement('h4');
+    titleElement.classList.add('song__title');
+    titleElement.textContent = titleValue;
+    const likeButtonElement = document.createElement('button');
+    likeButtonElement.classList.add('song__like');
+
+    /*songsContainer.insertAdjacentHTML('beforeend', `
     <div class="song">
       <h4 class="song__artist">${artistValue}</h4>
       <p class="song__title">${titleValue}</p>
       <button class="song__like"></button>
     </div>
-  `);
+  `);*/
+
 }
 
 addButton.addEventListener('click', function () {

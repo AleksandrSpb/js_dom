@@ -1,0 +1,60 @@
+1
+Протестируйте сайт на XSS-уязвимость локально или в любой из песочниц. Для этого вставьте в одно из текстовых полей код:
+<img src="https://invalid_url" onerror="alert('but most of all, samy is my hero')" >
+В атрибут src мы намеренно записали несуществующий адрес. При попытке загрузить такую картинку, вы увидите ошибку в консоли:
+image
+Тут важен onerror — второй атрибут тега img. Если картинку не удастся найти, исполнится код, который записан в onerror. Как раз наш случай.
+А теперь момент истины: нажмите «Добавить». Если на экране появился alert — уязвимость есть.
+2
+Избавьтесь от insertAdjacentHTML там, где пользователь может ввести какую-либо информацию.
+Перепишите код внутри функции addSong:
+songsContainer.insertAdjacentHTML('beforeend', `
+  <div class="song">
+    <h4 class="song__artist">${artistValue /* это данные от пользователя */}</h4>
+    <p class="song__title">${titleValue /* это тоже данные от пользователя */}</p>
+    <button class="song__like"></button>
+  </div>
+`);
+Избавляться от insertAdjacentHTML будем так: сначала методом createElement соберём элемент, затем добавим его в разметку.
+Для этого внутри addSong методом createElement создайте div и запишите его в переменную trackContainer. Затем вызовом classList.add добавьте этому элементу класс song:
+function addSong(artistValue, titleValue) {
+  const trackContainer = /* здесь создайте элемент div */
+  /* а здесь присвойте ему класс .song */
+
+  songsContainer.insertAdjacentHTML('beforeend', `
+    <div class="song">
+      <h4 class="song__artist">${artistValue}</h4>
+      <p class="song__title">${titleValue}</p>
+      <button class="song__like"></button>
+    </div>
+  `);
+}
+выполнение :
+Методу createElement передайте строку 'div', методу classList.add — 'song':
+function addSong(artistValue, titleValue) {
+  const trackContainer = document.createElement(/* имя нужного тега */);
+  trackContainer.classList.add(/* название нужного класса */);
+
+  songsContainer.insertAdjacentHTML('beforeend', `
+    <div class="song">
+      <h4 class="song__artist">${artistValue}</h4>
+      <p class="song__title">${titleValue}</p>
+      <button class="song__like"></button>
+    </div>
+  `);
+}
+3
+Теперь создадим «внутренности» песни:
+Имя исполнителя — переменная artistElement: запишите в неё заголовок h4 с классом song__artist и текстом из параметра artistValue.
+Название песни — переменная titleElement: запишите в неё заголовок h4 с классом song__title и текстом параметра titleValue.
+Кнопка для лайка — переменная likeButtonElement: запишите в неё button с классом song__like..
+Тут мы указываем текстовое содержимое полей, поэтому insertAdjacentHTML больше не понадобится.
+Вот как можно реализовать первый пункт:
+// создаём элемент h4 и кладём его в переменную
+const artistElement = document.createElement('h4');
+
+// добавляем класс song__artist
+artistElement.classList.add('song__artist');
+
+// добавляем текст
+artistElement.textContent = artistValue;

@@ -15,24 +15,29 @@ function renderNoSongs() {
     resetButton.classList.add('input__btn_disabled');
     noSongsElement.classList.remove('no-songs_hidden');
 }
-/*решение 9 задачи*/
+/*решение 3 задачи*/
 function addSong(artistValue, titleValue) {
-    const songTemplate = document.querySelector('#song-template').content;
-    /*решение 10 задачи*/
-    const songElement = songTemplate.querySelector('.song').cloneNode(true);
-    songElement.querySelector('.song__artist').textContent = artistValue;
-    // добавьте songElement название песни
-    /*решение 11 задачи*/
-    songElement.querySelector('.song__title').textContent = titleValue;
-    /*решение 13 задачи*/
-    songElement.querySelector('.song__like').addEventListener('click', function (evt) {
-       /*решение 14 задачи*/
-        evt.target.classList.toggle('song__like_active');
-
-    });
-    /*решение 12 задачи*/
-    songsContainer.append(songElement);
-
+    const trackContainer =document.createElement ('div');
+    trackContainer.classList.add('song');
+    const artistElement = document.createElement('h4');
+    artistElement.classList.add('song__artist');
+    artistElement.textContent = artistValue;
+    const titleElement = document.createElement('h4');
+    titleElement.classList.add('song__title');
+    titleElement.textContent = titleValue;
+    const likeButtonElement = document.createElement('button');
+    likeButtonElement.classList.add('song__like');
+    /*решение 4 задачи*/
+    trackContainer.append(artistElement,titleElement,likeButtonElement);
+    /*решение 5 задачи*/
+    songsContainer.append(trackContainer);
+    /*songsContainer.insertAdjacentHTML('beforeend', `
+    <div class="song">
+      <h4 class="song__artist">${artistValue}</h4>
+      <p class="song__title">${titleValue}</p>
+      <button class="song__like"></button>
+    </div>
+  `);*/
 
 }
 
@@ -48,11 +53,11 @@ addButton.addEventListener('click', function () {
 });
 
 resetButton.addEventListener('click', function () {
-    const songs = document.querySelectorAll('.song')
-
+    const songs = document.querySelectorAll('.song');
+/*ответ на 6 задачу*/
     for (let i = 0; i < songs.length; i++) {
         songs[i].remove();
     }
-
+    /*ответ на 7 задачу*/
     renderNoSongs();
 });
